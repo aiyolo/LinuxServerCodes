@@ -1,3 +1,10 @@
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+
 bool daemonize()
 {
     pid_t pid = fork();
@@ -32,4 +39,14 @@ bool daemonize()
     open( "/dev/null", O_RDWR );
     open( "/dev/null", O_RDWR );
     return true;
+}
+
+int main(){
+    printf("%d\n", getpid());
+    daemonize();
+    while(1){
+        printf("Hello World\n");
+        sleep(1);
+    }
+    return 0;
 }

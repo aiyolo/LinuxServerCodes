@@ -71,8 +71,8 @@ int main( int argc, char* argv[] )
     int listenfd = socket( PF_INET, SOCK_STREAM, 0 );
     assert( listenfd >= 0 );
 
-    //int nReuseAddr = 1;
-    //setsockopt( listenfd, SOL_SOCKET, SO_REUSEADDR, &nReuseAddr, sizeof( nReuseAddr ) );
+    int nReuseAddr = 1;
+    setsockopt( listenfd, SOL_SOCKET, SO_REUSEADDR, &nReuseAddr, sizeof( nReuseAddr ) );
     ret = bind( listenfd, ( struct sockaddr* )&address, sizeof( address ) );
     if( ret == -1 )
     {
@@ -137,18 +137,28 @@ int main( int argc, char* argv[] )
                 {
                     for( int i = 0; i < ret; ++i )
                     {
-                        //printf( "I caugh the signal %d\n", signals[i] );
+                        printf( "I caugh the signal %d\n", signals[i] );
                         switch( signals[i] )
                         {
                             case SIGCHLD:
+                            {
+                                printf("SIGCHLD\n");
+                                break;
+                            }
                             case SIGHUP:
                             {
-                                continue;
+                                printf("SIGHUP\n");
+                                break;
                             }
                             case SIGTERM:
+                            {
+                                printf("SIGTERM\n");
+                                break;
+                            }
                             case SIGINT:
                             {
                                 stop_server = true;
+                                break;
                             }
                         }
                     }
